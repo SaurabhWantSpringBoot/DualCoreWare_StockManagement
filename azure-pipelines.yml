@@ -27,6 +27,12 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
+# Copy build output into the artifacts folder
+- script: |
+    echo "Copying build outputs..."
+    mkdir "$(Build.ArtifactStagingDirectory)"
+    xcopy target "$(Build.ArtifactStagingDirectory)" /E /I /Y
+  displayName: "Prepare artifacts"
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
